@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
-import { ChevronRightIcon } from "../primitives";
+import { tokens } from "../generated-tokens/tokens";
+import { ChevronRightIcon } from "../BlueSkyIcons/ChevronRightIcon";
 import { FoldGridTile, type FoldGridTileProps } from "./FoldGridTile";
 import { FoldPressable } from "./FoldPressable";
 import { FoldText } from "./FoldText";
@@ -12,7 +13,11 @@ type FoldGridSectionProps = {
   items: FoldGridTileProps[];
 };
 
-export const FoldGridSection = ({ title, onPress, items }: FoldGridSectionProps) => {
+export const FoldGridSection = ({
+  title,
+  onPress,
+  items,
+}: FoldGridSectionProps) => {
   const theme = UnistylesRuntime.getTheme();
   return (
     <View
@@ -31,7 +36,7 @@ export const FoldGridSection = ({ title, onPress, items }: FoldGridSectionProps)
         }}
       >
         <FoldText type="header-md">{title}</FoldText>
-        <ChevronRightIcon fill={theme.colors.face.tertiary} />
+        <ChevronRightIcon fill={tokens.face.tertiary} />
       </FoldPressable>
 
       <View

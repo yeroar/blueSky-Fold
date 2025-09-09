@@ -1,13 +1,19 @@
 import React from "react";
-import { ActivityIndicator, Pressable, type TextStyle, View, type ViewStyle } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  type TextStyle,
+  View,
+  type ViewStyle,
+} from "react-native";
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 import { FoldText } from "./FoldText";
+import { tokens } from "../generated-tokens/tokens";
 
 const DURATION = 150 / 2;
 const SCALE = {
@@ -110,25 +116,17 @@ const FoldButton = ({
   testID,
   hideUnderline = false,
 }: FoldButtonProps) => {
-  const theme = UnistylesRuntime.getTheme();
-
-  styles.useVariants({
-    size,
-    isDisabled: disabled,
-    hideUnderline,
-  });
-
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => {
     let releasedBackgroundColor =
       type === "primary"
-        ? theme.colors.object.primary.bold.default
+        ? tokens.object.primary.bold.default
         : type === "secondary"
-          ? theme.colors.object.secondary.default
+          ? tokens.object.secondary.default
           : "transparent";
 
     if (disabled) {
-      releasedBackgroundColor = theme.colors.object.disabled.disabled;
+      releasedBackgroundColor = tokens.object.secondary.default; // No disabled state in tokens, using secondary
     }
 
     if (type === "tertiary") {
@@ -137,10 +135,10 @@ const FoldButton = ({
 
     const pressedBackgroundColor =
       type === "primary"
-        ? theme.colors.object.primary.bold.pressed
+        ? tokens.object.primary.bold.pressed
         : type === "secondary"
-          ? theme.colors.object.secondary.pressed
-          : theme.colors.object.tertiary.pressed;
+          ? tokens.object.secondary.pressed
+          : tokens.object.secondary.pressed; // Using secondary for tertiary
 
     return {
       transform: [{ scale: scale.value }],
@@ -171,13 +169,13 @@ const FoldButton = ({
     }
   };
 
-  const spinnerColor = disabled ? theme.colors.face.primary : theme.colors.face.primary;
+  const spinnerColor = disabled ? tokens.face.primary : tokens.face.primary;
 
   return (
     <Animated.View
       style={[
         { width: fullWidth || loading !== undefined ? "100%" : "auto" },
-        styles.container,
+        getContainerStyle(size),
         animatedStyle,
         style,
       ]}
@@ -187,7 +185,7 @@ const FoldButton = ({
         onPressOut={handlePressOut}
         disabled={disabled || loading}
         onPress={handleOnPress}
-        style={styles.pressableBase}
+        style={getPressableStyle(size)}
         testID={testID}
       >
         {loading ? (
@@ -201,7 +199,7 @@ const FoldButton = ({
                   <LeadingIcon
                     width={size === "xs" ? 16 : 20}
                     height={size === "xs" ? 16 : 20}
-                    fill={disabled ? theme.colors.face.disabled : theme.colors.face.primary}
+                    fill={disabled ? tokens.face.disabled : tokens.face.primary}
                   />
                 );
               })()}
@@ -211,7 +209,7 @@ const FoldButton = ({
                 {
                   lineHeight: size === "xs" ? 16 : 20,
                 },
-                styles.textBase,
+                getTextStyle(type, disabled, hideUnderline),
                 textStyle,
               ]}
             >
@@ -224,7 +222,7 @@ const FoldButton = ({
                   <TrailingIcon
                     width={size === "xs" ? 16 : 20}
                     height={size === "xs" ? 16 : 20}
-                    fill={disabled ? theme.colors.face.disabled : theme.colors.face.primary}
+                    fill={disabled ? tokens.face.disabled : tokens.face.primary}
                   />
                 );
               })()}
@@ -235,110 +233,49 @@ const FoldButton = ({
   );
 };
 
-const styles = StyleSheet.create((theme) => {
-  return {
-    innerWrapper: {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      gap: 4,
-    },
-    textBase: {
-      includeFontPadding: false,
-      textAlignVertical: "center",
-      variants: {
-        isDisabled: {
-          true: {
-            color: theme.colors.face.disabled,
-          },
-        },
-        type: {
-          tertiary: {
-            // No borderBottomWidth here
-            borderBottomColor: theme.colors.face.primary,
-          },
-        },
-        hideUnderline: {
-          true: {
-            borderBottomWidth: 0,
-          },
-        },
-      },
-      compoundVariants: [
-        {
-          type: "tertiary",
-          hideUnderline: false,
-          styles: {
-            borderBottomWidth: 1,
-            borderBottomColor: theme.colors.face.primary,
-          },
-        },
-        {
-          type: "tertiary",
-          isDisabled: true,
-          styles: {
-            borderBottomColor: theme.colors.face.disabled,
-          },
-        },
-      ],
-    },
-    pressableBase: {
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-      variants: {
-        isDisabled: {
-          true: {},
-          false: {},
-        },
-        size: {
-          xs: {
-            paddingHorizontal: theme.spacing.sm,
-            paddingVertical: 10,
-          },
-          sm: {
-            paddingHorizontal: theme.spacing.md,
-            paddingVertical: 10,
-          },
-          md: {
-            paddingHorizontal: theme.spacing.lg,
-            paddingVertical: 14,
-          },
-          lg: {
-            paddingHorizontal: theme.spacing.xl,
-            paddingVertical: 18,
-          },
-        },
-      },
-    },
-    container: {
-      alignSelf: "flex-start",
-      borderRadius: theme.radius.md,
-      justifyContent: "center",
-      alignItems: "center",
+const styles = {
+  innerWrapper: {
+    flexDirection: "row" as const,
+    justifyContent: "center" as const,
+    alignItems: "center" as const,
+    gap: 4,
+  },
+};
 
-      variants: {
-        isDisabled: {
-          true: {},
-          false: {},
-        },
-        size: {
-          xs: {
-            minWidth: 36,
-          },
-          sm: {
-            minWidth: 40,
-          },
-          md: {
-            minWidth: 48,
-          },
-          lg: {
-            minWidth: 56,
-          },
-        },
-      },
-    },
-  };
+const getContainerStyle = (size: "xs" | "sm" | "md" | "lg") => ({
+  alignSelf: "flex-start" as const,
+  borderRadius: 12, // theme.radius.md equivalent
+  justifyContent: "center" as const,
+  alignItems: "center" as const,
+  minWidth: size === "xs" ? 36 : size === "sm" ? 40 : size === "md" ? 48 : 56,
+});
+
+const getPressableStyle = (size: "xs" | "sm" | "md" | "lg") => ({
+  width: "100%" as const,
+  justifyContent: "center" as const,
+  alignItems: "center" as const,
+  paddingHorizontal:
+    size === "xs"
+      ? tokens.spacing.sm
+      : size === "sm"
+        ? tokens.spacing.md
+        : size === "md"
+          ? tokens.spacing.lg
+          : tokens.spacing.xl,
+  paddingVertical:
+    size === "xs" ? 10 : size === "sm" ? 10 : size === "md" ? 14 : 18,
+});
+
+const getTextStyle = (
+  type: "primary" | "secondary" | "tertiary",
+  disabled: boolean,
+  hideUnderline: boolean
+) => ({
+  includeFontPadding: false,
+  textAlignVertical: "center" as const,
+  color: disabled ? tokens.face.disabled : undefined,
+  borderBottomWidth: type === "tertiary" && !hideUnderline ? 1 : 0,
+  borderBottomColor: disabled ? tokens.face.disabled : tokens.face.primary,
 });
 
 export { FoldButton };

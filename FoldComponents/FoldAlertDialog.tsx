@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
 import { FoldButton } from "./FoldButton";
 import { FoldText } from "./FoldText";
+import { tokens } from "../generated-tokens/tokens";
 
 export const ALERT_MESSAGE_HEIGHT = 154; // If this changes we need to also change the FoldTabView
 
@@ -12,12 +13,12 @@ export const FoldAlertDialog = () => {
     <View
       style={{
         height: ALERT_MESSAGE_HEIGHT,
-        borderColor: theme.colors.border.secondary,
+        borderColor: tokens.border.secondary,
         borderWidth: 0.5,
         paddingVertical: 20,
         paddingHorizontal: 16,
         borderRadius: 12,
-        backgroundColor: theme.colors.object.secondary.default,
+        backgroundColor: tokens.object.secondary.default,
       }}
     >
       <FoldText
@@ -33,7 +34,7 @@ export const FoldAlertDialog = () => {
         numberOfLines={2}
         style={{
           marginBottom: 12,
-          color: theme.colors.face.secondary,
+          color: tokens.face.secondary,
         }}
       >
         Avoid people having to look in another location for more information.

@@ -1,7 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
-import { ChevronRightIcon } from "../primitives";
+import { tokens } from "../generated-tokens/tokens";
+import { ChevronRightIcon } from "../BlueSkyIcons/ChevronRightIcon";
 import { FoldPressable } from "./FoldPressable";
 import { FoldProgressBar } from "./FoldProgressBar";
 import { FoldText } from "./FoldText";
@@ -44,7 +45,7 @@ export const FoldTile = ({
         }}
       >
         <FoldText type="header-md">{title}</FoldText>
-        {onPress && <ChevronRightIcon fill={theme.colors.face.tertiary} />}
+        {onPress && <ChevronRightIcon fill={tokens.face.tertiary} />}
       </View>
       <FoldText
         type="header-md"
@@ -56,7 +57,9 @@ export const FoldTile = ({
       </FoldText>
 
       {/* Progress bar */}
-      {progress !== undefined && progress !== null && <FoldProgressBar progress={progress} />}
+      {progress !== undefined && progress !== null && (
+        <FoldProgressBar progress={progress} />
+      )}
 
       {/* Bottom text */}
       {(subLabel1 || subLabel2) && (
@@ -70,7 +73,7 @@ export const FoldTile = ({
           <FoldText
             type="body-sm"
             style={{
-              color: theme.colors.face.secondary,
+              color: tokens.face.secondary,
             }}
           >
             {subLabel1}
@@ -79,7 +82,7 @@ export const FoldTile = ({
             <FoldText
               type="body-sm"
               style={{
-                color: theme.colors.face.secondary,
+                color: tokens.face.secondary,
               }}
             >
               {subLabel2}
@@ -89,7 +92,9 @@ export const FoldTile = ({
       )}
 
       {/* Footer */}
-      {footerComponent && <View style={{ marginTop: 20 }}>{footerComponent}</View>}
+      {footerComponent && (
+        <View style={{ marginTop: 20 }}>{footerComponent}</View>
+      )}
     </FoldPressable>
   );
 };

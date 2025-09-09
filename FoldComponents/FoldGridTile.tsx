@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, View } from "react-native";
-import { UnistylesRuntime } from "react-native-unistyles";
 import { FoldPressable } from "./FoldPressable";
 import { FoldText } from "./FoldText";
+import { tokens } from "../generated-tokens/tokens";
 
 export type FoldGridTileProps = {
   imageUrl?: string;
@@ -19,19 +19,18 @@ export const FoldGridTile = ({
   onPress,
   icon,
 }: FoldGridTileProps) => {
-  const theme = UnistylesRuntime.getTheme();
   return (
     <FoldPressable
       onPress={onPress}
       style={{
         width: "48%", // 2 columns with gap
         marginBottom: 4, // Space between rows
-        padding: theme.spacing.lg,
-        gap: theme.spacing.lg,
+        padding: 16, // theme.spacing.lg equivalent
+        gap: 16, // theme.spacing.lg equivalent
         borderRadius: 12,
         borderWidth: 0.5,
-        borderColor: theme.colors.border.tertiary,
-        backgroundColor: theme.colors.object.tertiary.default,
+        borderColor: tokens.border.tertiary,
+        backgroundColor: tokens.object.secondary.default, // Using secondary instead of tertiary
       }}
     >
       {icon && (
@@ -39,7 +38,7 @@ export const FoldGridTile = ({
           style={{
             borderRadius: 10,
             padding: 10,
-            backgroundColor: theme.colors.object.primary.bold.default,
+            backgroundColor: tokens.object.primary.bold.default,
             alignSelf: "flex-start",
           }}
         >
@@ -48,7 +47,10 @@ export const FoldGridTile = ({
       )}
       {imageUrl && (
         <View style={{}}>
-          <Image source={{ uri: imageUrl }} style={{ width: 40, height: 40, borderRadius: 10 }} />
+          <Image
+            source={{ uri: imageUrl }}
+            style={{ width: 40, height: 40, borderRadius: 10 }}
+          />
         </View>
       )}
 
@@ -58,7 +60,7 @@ export const FoldGridTile = ({
         }}
       >
         <FoldText type={"body-md-bold"}>{title}</FoldText>
-        <FoldText type={"body-sm-bold"} color={theme.colors.face.accentBold}>
+        <FoldText type={"body-sm-bold"} color={tokens.face.accentBold}>
           {description}
         </FoldText>
       </View>

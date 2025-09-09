@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import { CheckCircleIcon, XCircleIcon } from "../primitives/icons";
-// import { UnistylesRuntime } from "react-native-unistyles";
+import { CheckCircleIcon } from "../BlueSkyIcons/CheckCircleIcon";
+import { XCircleIcon } from "../BlueSkyIcons/XCircleIcon";
 import { FoldText } from "./FoldText";
 
 type FoldValidationRowProps = {
@@ -10,7 +10,11 @@ type FoldValidationRowProps = {
   iconSize?: number;
 };
 
-export const FoldValidationRow = ({ status, text, iconSize = 24 }: FoldValidationRowProps) => {
+export const FoldValidationRow = ({
+  status,
+  text,
+  iconSize = 24,
+}: FoldValidationRowProps) => {
   // const theme = UnistylesRuntime.getTheme();
 
   // TODO: Fix the color codes when we import colors

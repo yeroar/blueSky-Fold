@@ -1,6 +1,7 @@
 import { View } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
-import { ChevronRightIcon } from "../primitives";
+import { tokens } from "../generated-tokens/tokens";
+import { ChevronRightIcon } from "../BlueSkyIcons/ChevronRightIcon";
 import { FoldPressable } from "./FoldPressable";
 import { FoldText } from "./FoldText";
 
@@ -22,9 +23,9 @@ export const FoldProductFeatureTile = ({
   return (
     <View
       style={{
-        backgroundColor: theme.colors.object.secondary.default,
+        backgroundColor: tokens.object.secondary.default,
         borderWidth: 1,
-        borderColor: theme.colors.border.secondary,
+        borderColor: tokens.border.secondary,
         borderRadius: 12,
       }}
     >
@@ -35,7 +36,7 @@ export const FoldProductFeatureTile = ({
           gap: 2,
         }}
       >
-        <FoldText type="body-sm" color={theme.colors.face.tertiary}>
+        <FoldText type="body-sm" color={tokens.face.tertiary}>
           {label}
         </FoldText>
         <FoldText type="body-sm">{message}</FoldText>
@@ -45,7 +46,7 @@ export const FoldProductFeatureTile = ({
         style={{
           height: 1,
           width: "100%",
-          backgroundColor: theme.colors.border.secondary,
+          backgroundColor: tokens.border.secondary,
         }}
       />
 
@@ -59,10 +60,18 @@ export const FoldProductFeatureTile = ({
           justifyContent: "space-between",
         }}
       >
-        <FoldText type="body-sm" color={theme.colors.face.accentBold} numberOfLines={1}>
+        <FoldText
+          type="body-sm"
+          color={tokens.face.accentBold}
+          numberOfLines={1}
+        >
           {actionText}
         </FoldText>
-        <ChevronRightIcon fill={theme.colors.face.accentBold} width={16} height={16} />
+        <ChevronRightIcon
+          fill={tokens.face.accentBold}
+          width={16}
+          height={16}
+        />
       </FoldPressable>
     </View>
   );

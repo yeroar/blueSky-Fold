@@ -1,8 +1,10 @@
 import React from "react";
 import type { StyleProp, TextProps, TextStyle } from "react-native";
 import { Text } from "react-native";
-import { UnistylesRuntime } from "react-native-unistyles";
-import type { FoldTextType } from "../../theme/typography/typography";
+import { tokens } from "../generated-tokens/tokens";
+import { tokens as typographyTokens } from "../generated-tokens/typography";
+
+type FoldTextType = keyof typeof typographyTokens;
 
 interface FoldTextProps extends TextProps {
   type: FoldTextType;
@@ -11,13 +13,17 @@ interface FoldTextProps extends TextProps {
   color?: string;
 }
 
-export const FoldText = ({ type = "body-md", style, children, color, ...rest }: FoldTextProps) => {
-  const theme = UnistylesRuntime.getTheme();
-
+export const FoldText = ({
+  type = "body-md",
+  style,
+  children,
+  color,
+  ...rest
+}: FoldTextProps) => {
   const stylesCombined = [
-    theme.typography[type],
+    typographyTokens[type],
     {
-      color: color || theme.colors.face.primary,
+      color: color || tokens.face.primary,
     },
     style as TextStyle,
   ];

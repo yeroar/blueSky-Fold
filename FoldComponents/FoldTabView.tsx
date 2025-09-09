@@ -10,8 +10,12 @@ import {
 } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
-import { ClockIcon, MenuIcon, NotificationMessageIcon } from "../primitives/icons";
+import { StyleSheet } from "react-native";
+import { UnistylesRuntime } from "react-native-unistyles";
+import { tokens } from "../generated-tokens/tokens";
+import { ClockIcon } from "../BlueSkyIcons/ClockIcon";
+import { MenuIcon } from "../BlueSkyIcons/MenuIcon";
+import { NotificationMessageIcon } from "../BlueSkyIcons/NotificationMessageIcon";
 import { ALERT_MESSAGE_HEIGHT } from "./FoldAlertDialog";
 import FoldHeader from "./FoldHeader";
 import { FoldPressable } from "./FoldPressable";
@@ -53,37 +57,45 @@ export const FoldTabView = ({
   const headerOffset = useRef(new Animated.Value(0)).current;
 
   const FINAL_HEADER_TO_USE =
-    HEADER_HEIGHT + (foldAlertDialog !== undefined ? ALERT_MESSAGE_HEIGHT + 12 : 0); // 12 is for the padding bottom
+    HEADER_HEIGHT +
+    (foldAlertDialog !== undefined ? ALERT_MESSAGE_HEIGHT + 12 : 0); // 12 is for the padding bottom
 
   // Listen to scroll events
-  const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-    useNativeDriver: true,
-    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const currentY = event.nativeEvent.contentOffset.y;
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    {
+      useNativeDriver: true,
+      listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const currentY = event.nativeEvent.contentOffset.y;
 
-      const diff = currentY - prevScrollY.current;
+        const diff = currentY - prevScrollY.current;
 
-      // Ignore negative bounce
-      if (currentY <= 0) {
-        headerOffset.setValue(0);
+        // Ignore negative bounce
+        if (currentY <= 0) {
+          headerOffset.setValue(0);
 
-        prevScrollY.current = 0;
+          prevScrollY.current = 0;
 
-        return;
-      }
+          return;
+        }
 
-      // Scrolling down
-      if (diff > 0) {
-        headerOffset.setValue(Math.min(FINAL_HEADER_TO_USE, (headerOffset as any)._value + diff));
-      }
-      // Scrolling up
-      else if (diff < 0) {
-        headerOffset.setValue(Math.max(0, (headerOffset as any)._value + diff));
-      }
+        // Scrolling down
+        if (diff > 0) {
+          headerOffset.setValue(
+            Math.min(FINAL_HEADER_TO_USE, (headerOffset as any)._value + diff)
+          );
+        }
+        // Scrolling up
+        else if (diff < 0) {
+          headerOffset.setValue(
+            Math.max(0, (headerOffset as any)._value + diff)
+          );
+        }
 
-      prevScrollY.current = currentY;
-    },
-  });
+        prevScrollY.current = currentY;
+      },
+    }
+  );
 
   //   Keeping this here incase we want header animations. At this time we do not
   //   const headerTranslateY = Animated.multiply(headerOffset, -1);
@@ -125,7 +137,7 @@ export const FoldTabView = ({
         <FoldPressable
           style={{
             borderRadius: 4,
-            backgroundColor: theme.colors.object.primary.bold.default,
+            backgroundColor: tokens.object.primary.bold.default,
             paddingHorizontal: 8,
             paddingVertical: 4,
           }}
@@ -232,14 +244,14 @@ export const FoldTabView = ({
   );
 };
 
-const styles = StyleSheet.create((theme) => ({
-  container: { flex: 1, backgroundColor: theme.colors.layer.background },
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: tokens.layer.background },
   header: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: theme.colors.layer.background,
+    backgroundColor: tokens.layer.background,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 10,
@@ -255,4 +267,4 @@ const styles = StyleSheet.create((theme) => ({
     height: StyleSheet.hairlineWidth,
     backgroundColor: "#ccc",
   },
-}));
+});

@@ -11,9 +11,9 @@ import {
   View,
   type ViewStyle,
 } from "react-native";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
-import { ChevronDownIcon } from "../primitives/icons";
+import { ChevronDownIcon } from "../BlueSkyIcons/ChevronDownIcon";
 import { FoldText } from "./FoldText";
+import { tokens } from "../generated-tokens/tokens";
 
 export interface FoldDropdownProps {
   label?: string;
@@ -42,11 +42,11 @@ export const FoldDropdown: React.FC<FoldDropdownProps> = ({
   inputStyles = {},
   labelStyles = {},
 }) => {
-  const theme = UnistylesRuntime.getTheme();
-
   const [open, setOpen] = useState(false);
 
-  const [dropdownLayout, setDropdownLayout] = useState<LayoutRectangle | null>(null);
+  const [dropdownLayout, setDropdownLayout] = useState<LayoutRectangle | null>(
+    null
+  );
 
   const [renderAbove, setRenderAbove] = useState(false);
 
@@ -113,7 +113,7 @@ export const FoldDropdown: React.FC<FoldDropdownProps> = ({
       <View
         style={{
           borderWidth: 1,
-          borderColor: open ? theme.colors.border.focused : "transparent",
+          borderColor: open ? tokens.border.focused : "transparent",
           borderRadius: 7,
         }}
       >
@@ -127,8 +127,8 @@ export const FoldDropdown: React.FC<FoldDropdownProps> = ({
             },
             {
               borderColor: open
-                ? theme.colors.border.focused
-                : inputStyles?.borderColor || theme.colors.border.primary,
+                ? tokens.border.focused
+                : inputStyles?.borderColor || tokens.border.primary,
             },
           ]}
           activeOpacity={0.5}
@@ -145,7 +145,12 @@ export const FoldDropdown: React.FC<FoldDropdownProps> = ({
         </TouchableOpacity>
       </View>
 
-      <Modal transparent visible={open} animationType="none" onRequestClose={() => setOpen(false)}>
+      <Modal
+        transparent
+        visible={open}
+        animationType="none"
+        onRequestClose={() => setOpen(false)}
+      >
         <TouchableWithoutFeedback onPress={() => setOpen(false)}>
           <View style={styles.modalOverlay}>
             {dropdownLayout && (
@@ -180,49 +185,44 @@ export const FoldDropdown: React.FC<FoldDropdownProps> = ({
   );
 };
 
-const styles = StyleSheet.create((theme) => ({
+const styles = {
   label: {
     marginBottom: 4,
-    color: theme.colors.face.primary,
+    color: tokens.face.primary,
   },
   dropdownButton: {
     borderWidth: 1,
-    borderColor: theme.colors.border.primary,
+    borderColor: tokens.border.primary,
     paddingVertical: 16,
     paddingHorizontal: 12,
     borderRadius: 6,
-    backgroundColor: theme.colors.layer.background,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    backgroundColor: tokens.layer.background,
+    flexDirection: "row" as const,
+    justifyContent: "space-between" as const,
+    alignItems: "center" as const,
   },
   placeholder: {
-    color: theme.colors.face.secondary,
+    color: tokens.face.secondary,
   },
   modalOverlay: {
     flex: 1,
     backgroundColor: "transparent",
   },
   dropdownList: {
-    position: "absolute",
+    position: "absolute" as const,
     backgroundColor: "#fff",
     borderRadius: 8,
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 4,
-    // elevation: 5,
     zIndex: 1000,
     borderWidth: 1,
-    borderColor: theme.colors.border.primary,
+    borderColor: tokens.border.primary,
   },
   option: {
     paddingVertical: 16,
     paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: theme.colors.border.primary,
+    borderBottomColor: tokens.border.primary,
   },
   optionText: {
-    color: theme.colors.face.secondary,
+    color: tokens.face.secondary,
   },
-}));
+};

@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
 import { type TextStyle, View, type ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
 import { FoldText } from "./FoldText";
+import { tokens } from "../generated-tokens/tokens";
 
 export interface FoldInputProps extends React.ComponentProps<typeof TextInput> {
   label?: string;
@@ -55,8 +55,6 @@ const FoldInput = forwardRef<TextInput, FoldInputProps>(
     },
     ref
   ) => {
-    const theme = UnistylesRuntime.getTheme();
-
     const [isFocused, setIsFocused] = React.useState(false);
 
     return (
@@ -71,7 +69,7 @@ const FoldInput = forwardRef<TextInput, FoldInputProps>(
                 style={[
                   styles.label,
                   {
-                    color: theme.colors.face.secondary,
+                    color: tokens.face.secondary,
                   },
                   labelStyle,
                 ]}
@@ -85,7 +83,7 @@ const FoldInput = forwardRef<TextInput, FoldInputProps>(
         <View
           style={[
             styles.inputWrapper,
-            isFocused && { borderColor: theme.colors.border.focused, borderWidth: 2 },
+            isFocused && { borderColor: tokens.border.focused, borderWidth: 2 },
             inputContainerStyle,
           ]}
         >
@@ -119,33 +117,33 @@ const FoldInput = forwardRef<TextInput, FoldInputProps>(
   }
 );
 
-const styles = StyleSheet.create((theme) => ({
+const styles = {
   container: {
-    width: "100%",
+    width: "100%" as const,
   },
   label: {
     marginBottom: 8,
   },
   inputWrapper: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
+    width: "100%" as const,
+    flexDirection: "row" as const,
+    alignItems: "center" as const,
     borderWidth: 1,
     borderRadius: 6,
-    borderColor: theme.colors.border.primary,
-    backgroundColor: theme.colors.layer.background,
+    borderColor: tokens.border.primary,
+    backgroundColor: tokens.layer.background,
     paddingHorizontal: 12,
     height: 52,
     gap: 12,
   },
   input: {
     flex: 1,
-    height: "100%",
+    height: "100%" as const,
     fontSize: 14,
     fontFamily: "Geist",
-    fontWeight: "400",
+    fontWeight: "400" as const,
     letterSpacing: 0.14,
   },
-}));
+};
 
 export default FoldInput;

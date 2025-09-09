@@ -10,10 +10,17 @@ import {
   View,
   type ViewStyle,
 } from "react-native";
-import { KeyboardAwareScrollView, KeyboardStickyView } from "react-native-keyboard-controller";
+import {
+  KeyboardAwareScrollView,
+  KeyboardStickyView,
+} from "react-native-keyboard-controller";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { StyleSheet, UnistylesRuntime } from "react-native-unistyles";
-import { ArrowNarrowLeftIcon, ChevronLeftIcon, XCloseIcon } from "../primitives/icons";
+import { StyleSheet } from "react-native";
+import { UnistylesRuntime } from "react-native-unistyles";
+import { tokens } from "../generated-tokens/tokens";
+import { ArrowNarrowLeftIcon } from "../BlueSkyIcons/ArrowNarrowLeftIcon";
+import { ChevronLeftIcon } from "../BlueSkyIcons/ChevronLeftIcon";
+import { XCloseIcon } from "../BlueSkyIcons/XCloseIcon";
 import FoldHeader from "./FoldHeader";
 import { FoldPressable } from "./FoldPressable";
 
@@ -78,34 +85,41 @@ export const FoldPageView = ({
   const animatedBottom = useRef(new Animated.Value(insets.bottom)).current;
 
   // Listen to scroll events
-  const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-    useNativeDriver: true,
-    listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const currentY = event.nativeEvent.contentOffset.y;
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    {
+      useNativeDriver: true,
+      listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        const currentY = event.nativeEvent.contentOffset.y;
 
-      const diff = currentY - prevScrollY.current;
+        const diff = currentY - prevScrollY.current;
 
-      // Ignore negative bounce
-      if (currentY <= 0) {
-        headerOffset.setValue(0);
+        // Ignore negative bounce
+        if (currentY <= 0) {
+          headerOffset.setValue(0);
 
-        prevScrollY.current = 0;
+          prevScrollY.current = 0;
 
-        return;
-      }
+          return;
+        }
 
-      // Scrolling down
-      if (diff > 0) {
-        headerOffset.setValue(Math.min(HEADER_HEIGHT, (headerOffset as any)._value + diff));
-      }
-      // Scrolling up
-      else if (diff < 0) {
-        headerOffset.setValue(Math.max(0, (headerOffset as any)._value + diff));
-      }
+        // Scrolling down
+        if (diff > 0) {
+          headerOffset.setValue(
+            Math.min(HEADER_HEIGHT, (headerOffset as any)._value + diff)
+          );
+        }
+        // Scrolling up
+        else if (diff < 0) {
+          headerOffset.setValue(
+            Math.max(0, (headerOffset as any)._value + diff)
+          );
+        }
 
-      prevScrollY.current = currentY;
-    },
-  });
+        prevScrollY.current = currentY;
+      },
+    }
+  );
 
   const headerTranslateY = Animated.multiply(headerOffset, -1);
 
@@ -239,7 +253,10 @@ export const FoldPageView = ({
 
       {/* Bottom footer area */}
       {footerComponent && (
-        <KeyboardStickyView offset={{ closed: 0, opened: 0 }} enabled={stickyFooterEnabled}>
+        <KeyboardStickyView
+          offset={{ closed: 0, opened: 0 }}
+          enabled={stickyFooterEnabled}
+        >
           <Animated.View
             onLayout={(event) => {
               const { height } = event.nativeEvent.layout;
@@ -280,17 +297,17 @@ export const FoldPageView = ({
   );
 };
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.layer.background,
+    backgroundColor: tokens.layer.background,
   },
   header: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: theme.colors.layer.background,
+    backgroundColor: tokens.layer.background,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 10,
@@ -306,4 +323,4 @@ const styles = StyleSheet.create((theme) => ({
     height: StyleSheet.hairlineWidth,
     backgroundColor: "#ccc",
   },
-}));
+});

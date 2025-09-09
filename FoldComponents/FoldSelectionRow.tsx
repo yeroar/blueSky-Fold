@@ -1,7 +1,9 @@
 import React from "react";
 import { Linking, View } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
-import { CheckCircleIcon, CircleIcon } from "../primitives/icons";
+import { tokens } from "../generated-tokens/tokens";
+import { CheckCircleIcon } from "../BlueSkyIcons/CheckCircleIcon";
+import { CircleIcon } from "../BlueSkyIcons/CircleIcon";
 import { FoldPressable } from "./FoldPressable";
 import { FoldText } from "./FoldText";
 
@@ -51,7 +53,9 @@ export const FoldSelectionRow: React.FC<FoldSelectionRowProps> = ({
               key={idx++}
               type={"body-sm-bold"}
               style={{ textDecorationLine: "underline" }}
-              onPress={() => linkMap[phrase] && Linking.openURL(linkMap[phrase])}
+              onPress={() =>
+                linkMap[phrase] && Linking.openURL(linkMap[phrase])
+              }
             >
               {phrase}
             </FoldText>
@@ -71,7 +75,8 @@ export const FoldSelectionRow: React.FC<FoldSelectionRowProps> = ({
           .filter((i) => i >= 0)
           .sort((a, b) => a - b)[0];
 
-        const cutIdx = nextPhraseIdx !== undefined ? nextPhraseIdx : remainingText.length;
+        const cutIdx =
+          nextPhraseIdx !== undefined ? nextPhraseIdx : remainingText.length;
 
         elements.push(remainingText.slice(0, cutIdx));
 
@@ -87,7 +92,7 @@ export const FoldSelectionRow: React.FC<FoldSelectionRowProps> = ({
         borderWidth: 1,
         borderColor: "#F5EFD6",
         borderRadius: 12,
-        backgroundColor: theme.colors.layer.background,
+        backgroundColor: tokens.layer.background,
         width: "100%",
       }}
     >
@@ -125,7 +130,9 @@ export const FoldSelectionRow: React.FC<FoldSelectionRowProps> = ({
                   <FoldText
                     type={"body-sm-bold"}
                     style={{ textDecorationLine: "underline" }}
-                    onPress={() => option?.linkUrl && Linking.openURL(option.linkUrl)}
+                    onPress={() =>
+                      option?.linkUrl && Linking.openURL(option.linkUrl)
+                    }
                   >
                     {option.linkText}
                   </FoldText>

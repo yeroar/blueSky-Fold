@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { UnistylesRuntime } from "react-native-unistyles";
+import { tokens } from "../generated-tokens/tokens";
 import { FoldButton } from "./FoldButton";
 import { FoldText } from "./FoldText";
 
@@ -8,7 +9,10 @@ type FoldMarcomHeroTileProps = {
   onPress?: () => void;
 };
 
-export const FoldMarcomHeroTile = ({ title, onPress }: FoldMarcomHeroTileProps) => {
+export const FoldMarcomHeroTile = ({
+  title,
+  onPress,
+}: FoldMarcomHeroTileProps) => {
   const theme = UnistylesRuntime.getTheme();
   return (
     <View
@@ -19,7 +23,7 @@ export const FoldMarcomHeroTile = ({ title, onPress }: FoldMarcomHeroTileProps) 
     >
       <View
         style={{
-          backgroundColor: theme.colors.object.accent.subtle.default,
+          backgroundColor: tokens.object.accent.subtle.default,
           borderRadius: 16,
           paddingHorizontal: theme.spacing.xl,
           paddingVertical: theme.spacing.xxl,
