@@ -1,6 +1,5 @@
 import React from "react";
 import { View } from "react-native";
-import { UnistylesRuntime } from "react-native-unistyles";
 import { tokens } from "../generated-tokens/tokens";
 import { ChevronRightIcon } from "../BlueSkyIcons/ChevronRightIcon";
 import { FoldGridTile, type FoldGridTileProps } from "./FoldGridTile";
@@ -18,20 +17,19 @@ export const FoldGridSection = ({
   onPress,
   items,
 }: FoldGridSectionProps) => {
-  const theme = UnistylesRuntime.getTheme();
   return (
     <View
       style={{
-        paddingHorizontal: theme.spacing.xl,
-        paddingVertical: theme.spacing["3xl"],
-        gap: theme.spacing.xxl,
+        paddingHorizontal: tokens.spacing.xl,
+        paddingVertical: tokens.spacing["3xl"],
+        gap: tokens.spacing.xxl,
       }}
     >
       <FoldPressable
         onPress={onPress}
         style={{
           flexDirection: "row",
-          gap: 2,
+          gap: tokens.spacing.xs,
           alignItems: "center",
         }}
       >
@@ -43,7 +41,7 @@ export const FoldGridSection = ({
         style={{
           flexDirection: "row",
           flexWrap: "wrap",
-          gap: theme.spacing.md,
+          gap: tokens.spacing.md,
           justifyContent: "space-between", // Ensures spacing between columns
         }}
       >

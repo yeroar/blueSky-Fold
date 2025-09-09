@@ -228,7 +228,7 @@ export const FoldPageView = ({
         }}
         contentContainerStyle={{
           paddingTop: HEADER_HEIGHT + insets.top + 16,
-          paddingHorizontal: theme.spacing.xl,
+          paddingHorizontal: tokens.spacing.xl,
           paddingBottom: insets.bottom + footerHeight + 16,
 
           ...((contentContainerStyle as any) || {}),

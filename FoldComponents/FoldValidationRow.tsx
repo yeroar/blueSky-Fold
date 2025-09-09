@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { tokens } from "../generated-tokens/tokens";
 import { CheckCircleIcon } from "../BlueSkyIcons/CheckCircleIcon";
 import { XCircleIcon } from "../BlueSkyIcons/XCircleIcon";
 import { FoldText } from "./FoldText";
@@ -24,7 +25,7 @@ export const FoldValidationRow = ({
       style={{
         flexDirection: "row",
         alignItems: "center",
-        gap: 8,
+        gap: tokens.spacing.sm,
       }}
     >
       {status === "valid" ? (

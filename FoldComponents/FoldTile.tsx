@@ -1,6 +1,5 @@
 import React from "react";
 import { View } from "react-native";
-import { UnistylesRuntime } from "react-native-unistyles";
 import { tokens } from "../generated-tokens/tokens";
 import { ChevronRightIcon } from "../BlueSkyIcons/ChevronRightIcon";
 import { FoldPressable } from "./FoldPressable";
@@ -26,14 +25,12 @@ export const FoldTile = ({
   subLabel1,
   subLabel2,
 }: FoldTileProps) => {
-  const theme = UnistylesRuntime.getTheme();
-
   return (
     <FoldPressable
       disabled={!onPress}
       style={{
-        paddingHorizontal: theme.spacing.xl,
-        paddingVertical: theme.spacing["3xl"],
+        paddingHorizontal: tokens.spacing.xl,
+        paddingVertical: tokens.spacing["3xl"],
         width: "100%",
       }}
     >
@@ -41,7 +38,7 @@ export const FoldTile = ({
         style={{
           marginBottom: 4,
           flexDirection: "row",
-          gap: 2,
+          gap: tokens.spacing.xs,
         }}
       >
         <FoldText type="header-md">{title}</FoldText>
@@ -50,7 +47,7 @@ export const FoldTile = ({
       <FoldText
         type="header-md"
         style={{
-          marginBottom: subLabel1 || subLabel2 ? 12 : 0,
+          marginBottom: subLabel1 || subLabel2 ? tokens.spacing.md : 0,
         }}
       >
         {value}
@@ -67,7 +64,7 @@ export const FoldTile = ({
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
-            marginTop: 8,
+            marginTop: tokens.spacing.sm,
           }}
         >
           <FoldText
@@ -93,7 +90,7 @@ export const FoldTile = ({
 
       {/* Footer */}
       {footerComponent && (
-        <View style={{ marginTop: 20 }}>{footerComponent}</View>
+        <View style={{ marginTop: tokens.spacing.xl }}>{footerComponent}</View>
       )}
     </FoldPressable>
   );

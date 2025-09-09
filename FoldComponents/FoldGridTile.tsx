@@ -25,8 +25,8 @@ export const FoldGridTile = ({
       style={{
         width: "48%", // 2 columns with gap
         marginBottom: 4, // Space between rows
-        padding: 16, // theme.spacing.lg equivalent
-        gap: 16, // theme.spacing.lg equivalent
+        padding: tokens.spacing.lg,
+        gap: tokens.spacing.lg,
         borderRadius: 12,
         borderWidth: 0.5,
         borderColor: tokens.border.tertiary,
@@ -37,7 +37,7 @@ export const FoldGridTile = ({
         <View
           style={{
             borderRadius: 10,
-            padding: 10,
+            padding: tokens.spacing.sm,
             backgroundColor: tokens.object.primary.bold.default,
             alignSelf: "flex-start",
           }}
@@ -56,7 +56,7 @@ export const FoldGridTile = ({
 
       <View
         style={{
-          gap: 4,
+          gap: tokens.spacing.xs,
         }}
       >
         <FoldText type={"body-md-bold"}>{title}</FoldText>

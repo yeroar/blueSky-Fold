@@ -11,7 +11,6 @@ import {
 import { RefreshControl } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { UnistylesRuntime } from "react-native-unistyles";
 import { tokens } from "../generated-tokens/tokens";
 import { ClockIcon } from "../BlueSkyIcons/ClockIcon";
 import { MenuIcon } from "../BlueSkyIcons/MenuIcon";
@@ -48,7 +47,6 @@ export const FoldTabView = ({
 }: FoldTabViewProps) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const theme = UnistylesRuntime.getTheme();
 
   const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -129,7 +127,7 @@ export const FoldTabView = ({
     return (
       <View
         style={{
-          gap: 16,
+          gap: tokens.spacing.lg,
           flexDirection: "row",
           alignItems: "center",
         }}
@@ -138,7 +136,7 @@ export const FoldTabView = ({
           style={{
             borderRadius: 4,
             backgroundColor: tokens.object.primary.bold.default,
-            paddingHorizontal: 8,
+            paddingHorizontal: tokens.spacing.sm,
             paddingVertical: 4,
           }}
           onPress={() => {
@@ -196,8 +194,8 @@ export const FoldTabView = ({
           <View
             style={{
               width: "100%",
-              paddingHorizontal: 20,
-              paddingBottom: 12,
+              paddingHorizontal: tokens.spacing.xl,
+              paddingBottom: tokens.spacing.md,
             }}
           >
             {foldAlertDialog}
